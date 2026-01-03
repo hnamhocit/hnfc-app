@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-router-example",
-    "slug": "expo-router-example",
+    "name": "hnfc",
+    "slug": "hnfc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,13 +16,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.hnamhocit.hnfc"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hnamhocit.hnfc"
     },
     "web": {
       "bundler": "metro",
@@ -47,6 +51,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "bb5806d0-4555-4567-a59a-5e53cd90a79d"
+      }
     }
   }
 }

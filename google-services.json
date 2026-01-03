@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "540391501176",
+    "project_id": "hnfc-16985",
+    "storage_bucket": "hnfc-16985.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540391501176:android:5473bd32628a1be1f2ac8d",
+        "android_client_info": {
+          "package_name": "com.hnamhocit.hnfc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540391501176-ftqppc23in0d0vvca8tjcipr59haq9p5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtwlgfAkP7ZIj3MC_Mm6hLDxMedQsppdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540391501176-ftqppc23in0d0vvca8tjcipr59haq9p5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

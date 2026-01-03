@@ -1,4 +1,4 @@
-import TabBarIcon from 'components/TabBarIcon'
+import TabBarIcon from 'components/ui/TabBarIcon'
 import { Tabs } from 'expo-router'
 import { HouseIcon, UserIcon } from 'phosphor-react-native'
 import { useTheme } from 'tamagui'
@@ -13,7 +13,7 @@ export default function TabLayout() {
 				tabBarShowLabel: false,
 
 				tabBarActiveTintColor: theme.red10.val,
-				tabBarInactiveTintColor: theme.color10.val,
+				tabBarInactiveTintColor: theme.mutedForeground?.val,
 
 				tabBarStyle: {
 					backgroundColor: theme.background.val,
@@ -37,7 +37,7 @@ export default function TabLayout() {
 			/>
 
 			<Tabs.Screen
-				name='two'
+				name='profile'
 				options={{
 					tabBarIcon: ({ color, focused }) => (
 						<TabBarIcon

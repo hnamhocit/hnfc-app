@@ -1,17 +1,15 @@
 import '../tamagui-web.css'
 
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-} from '@react-navigation/native'
-import { Provider } from 'components/Provider'
+import { DarkTheme, ThemeProvider } from '@react-navigation/native'
+import Authenticate from 'components/shared/Authenticate'
+import CurrentToast from 'components/shared/CurrentToast'
+import { Provider } from 'components/shared/Provider'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useAndroidImmersive } from 'hooks/useAndroidImmersive'
 import { useEffect } from 'react'
-import { useColorScheme } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export { ErrorBoundary } from 'expo-router'
 
@@ -53,28 +51,29 @@ export default function RootLayout() {
 }
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-	return <Provider>{children}</Provider>
+	return (
+		<Provider>
+			<Authenticate>{children}</Authenticate>
+		</Provider>
+	)
 }
 
 function RootLayoutNav() {
-	const colorScheme = useColorScheme()
-
 	return (
-		<ThemeProvider
-			value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<StatusBar
-				hidden
-				translucent
-			/>
+		<SafeAreaProvider>
+			<ThemeProvider value={DarkTheme}>
+				<StatusBar
+					hidden
+					translucent
+				/>
 
-			<Stack>
-				<Stack.Screen
-					name='(tabs)'
-					options={{
+				<CurrentToast />
+				<Stack
+					screenOptions={{
 						headerShown: false,
 					}}
 				/>
-			</Stack>
-		</ThemeProvider>
+			</ThemeProvider>
+		</SafeAreaProvider>
 	)
 }

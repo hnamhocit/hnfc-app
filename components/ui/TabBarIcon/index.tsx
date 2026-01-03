@@ -22,7 +22,6 @@ export default function TabBarIcon({
 				minHeight: 48,
 				minWidth: 48,
 				borderRadius: 12,
-				backgroundColor: focused ? 'rgba(255,0,0,0.12)' : 'transparent',
 			}}>
 			<Icon
 				size={24}

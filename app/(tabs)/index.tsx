@@ -1,23 +1,19 @@
+import { Link } from 'expo-router'
+import { useUserStore } from 'stores'
 import { Button, Text, YStack } from 'tamagui'
 
 export default function TabOneScreen() {
+	const { user } = useUserStore()
+
 	return (
 		<YStack
 			flex={1}
-			items='center'
 			gap='$8'
-			px='$5'
-			pt='$5'
+			style={{ paddingBlock: 24, paddingInline: 20 }}
 			bg='$background'>
-			<Text
-				fontFamily='$heading'
-				fontWeight='$7'>
-				Plus Jarkata Sans
-			</Text>
+			<Text>{JSON.stringify(user, null, 2)}</Text>
 
-			<Text>
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-			</Text>
+			<Link href='/enter'>Enter</Link>
 
 			<Button>Hello world</Button>
 		</YStack>
