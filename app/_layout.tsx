@@ -1,9 +1,7 @@
 import '../tamagui-web.css'
 
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { DarkTheme, ThemeProvider } from '@react-navigation/native'
-import Authenticate from 'components/shared/Authenticate'
-import CurrentToast from 'components/shared/CurrentToast'
-import { Provider } from 'components/shared/Provider'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
@@ -11,8 +9,16 @@ import { useAndroidImmersive } from 'hooks/useAndroidImmersive'
 import { useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-export { ErrorBoundary } from 'expo-router'
+import Authenticate from 'components/shared/Authenticate'
+import CurrentToast from 'components/shared/CurrentToast'
+import { Provider } from 'components/shared/Provider'
 
+GoogleSignin.configure({
+	webClientId:
+		'540391501176-ftqppc23in0d0vvca8tjcipr59haq9p5.apps.googleusercontent.com',
+})
+
+export { ErrorBoundary } from 'expo-router'
 export const unstable_settings = {
 	initialRouteName: '(tabs)',
 }

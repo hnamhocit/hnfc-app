@@ -1,62 +1,61 @@
 {
-  "expo": {
-    "name": "hnfc",
-    "slug": "hnfc",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.hnamhocit.hnfc"
-    },
-    "android": {
-      "googleServicesFile": "./google-services.json",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.hnamhocit.hnfc"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      "expo-font",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "newArchEnabled": true
-          },
-          "android": {
-            "newArchEnabled": true
-          }
-        }
-      ],
-      "expo-web-browser"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "bb5806d0-4555-4567-a59a-5e53cd90a79d"
-      }
-    }
-  }
+	"expo": {
+		"name": "hnfc",
+		"slug": "hnfc",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "myapp",
+		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/images/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"googleServicesFile": "./GoogleService-Info.plist",
+			"bundleIdentifier": "com.hnamhocit.hnfc"
+		},
+		"android": {
+			"googleServicesFile": "./google-services.json",
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.hnamhocit.hnfc"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": [
+			"@react-native-google-signin/google-signin",
+			"expo-router",
+			"expo-font",
+			[
+				"expo-build-properties",
+				{
+					"ios": {
+						"newArchEnabled": true
+					},
+					"android": {
+						"newArchEnabled": true
+					}
+				}
+			],
+			"expo-web-browser"
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"router": {},
+			"eas": {
+				"projectId": "bb5806d0-4555-4567-a59a-5e53cd90a79d"
+			}
+		}
+	}
 }

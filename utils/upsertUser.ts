@@ -1,10 +1,19 @@
-import type { User as FirebaseUser } from 'firebase/auth'
-import { Timestamp } from 'firebase/firestore'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import {
+	doc,
+	getDoc,
+	setDoc,
+	Timestamp,
+	updateDoc,
+} from '@react-native-firebase/firestore'
+import { db } from 'config'
 
-import { db, doc, getDoc, setDoc } from 'config'
 import { IUser } from 'interfaces'
 
-export async function upsertUser(user: FirebaseUser, extra?: Partial<IUser>) {
+export async function upsertUser(
+	user: FirebaseAuthTypes.User,
+	extra?: Partial<IUser>,
+) {
 	if (!user?.uid) throw new Error('Missing user.uid')
 
 	const ref = doc(db, 'users', user.uid)
@@ -12,14 +21,11 @@ export async function upsertUser(user: FirebaseUser, extra?: Partial<IUser>) {
 	const now = Timestamp.now()
 
 	if (snap.exists()) {
-		await setDoc(
-			ref,
-			{
-				updatedAt: now,
-				...extra,
-			},
-			{ merge: true },
-		)
+		await updateDoc(ref, {
+			updatedAt: now,
+			...extra,
+		})
+
 		return false
 	}
 

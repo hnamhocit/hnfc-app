@@ -1,10 +1,12 @@
 'use client'
 
+import { onAuthStateChanged } from '@react-native-firebase/auth'
+import { doc, onSnapshot } from '@react-native-firebase/firestore'
 import { usePathname, useRouter } from 'expo-router'
 import { ReactNode, useEffect, useRef } from 'react'
 
 import Loading from 'components/ui/Loading'
-import { auth, db, doc, onAuthStateChanged, onSnapshot } from 'config'
+import { auth, db } from 'config'
 import { IUser } from 'interfaces'
 import { useUserStore } from 'stores'
 

@@ -1,3 +1,5 @@
+import { ReactNativeFirebase } from '@react-native-firebase/app'
+
 const COMMON_ERRORS: Record<string, string> = {
 	'auth/network-request-failed':
 		'Network error. Please check your connection.',
@@ -14,6 +16,8 @@ const EMAIL_ERRORS: Record<string, string> = {
 	'auth/user-disabled': 'This account has been disabled.',
 	'auth/email-already-in-use': 'This email is already registered.',
 	'auth/weak-password': 'Password should be at least 6 characters.',
+	'auth/account-exists-with-different-credential':
+		'An account already exists with the same email but a different sign-in method.',
 }
 
 const OAUTH_ERRORS: Record<string, string> = {
@@ -26,16 +30,27 @@ const OAUTH_ERRORS: Record<string, string> = {
 	'auth/invalid-credential': 'Invalid or expired sign-in credential.',
 }
 
-import { FirebaseError } from 'firebase/app'
-
 const ERROR_MAP = {
 	...COMMON_ERRORS,
 	...EMAIL_ERRORS,
 	...OAUTH_ERRORS,
 }
 
+export function isRNFBError(
+	e: unknown,
+): e is ReactNativeFirebase.NativeFirebaseError {
+	return (
+		typeof e === 'object' &&
+		e !== null &&
+		'code' in e &&
+		typeof (e as any).code === 'string' &&
+		'message' in e &&
+		typeof (e as any).message === 'string'
+	)
+}
+
 export function mapFirebaseError(error: unknown): string {
-	if (!(error instanceof FirebaseError)) {
+	if (!isRNFBError(error)) {
 		return 'Something went wrong. Please try again.'
 	}
 

@@ -1,19 +1,12 @@
 import { createId } from '@paralleldrive/cuid2'
-
-import {
-	collection,
-	db,
-	deleteDoc,
-	doc,
-	getDoc,
+import firestore, {
 	getDocs,
 	orderBy,
 	query,
-	setDoc,
 	Timestamp,
-	updateDoc,
 	where,
-} from 'config'
+} from '@react-native-firebase/firestore'
+
 import type { ICard, IDeck, IDeckStats, IDeckWithStats } from 'interfaces'
 import type { DeckInput } from 'schemas'
 import { deckSchema } from 'schemas'
@@ -33,15 +26,14 @@ export const deckService = {
 			createdAt: Timestamp.now(),
 			updatedAt: Timestamp.now(),
 		}
-		const ref = doc(db, COL, data.id)
-		await setDoc(ref, data)
-
+		const ref = firestore().doc(`${COL}/${data.id}`)
+		await ref.set(data)
 		return ref.id
 	},
 
 	async getById(deckId: string): Promise<IDeck> {
-		const ref = doc(db, COL, deckId)
-		const snap = await getDoc(ref)
+		const ref = firestore().doc(`${COL}/${deckId}`)
+		const snap = await ref.get()
 		if (!snap.exists()) throw new Error('Deck not found')
 		return snap.data() as IDeck
 	},
@@ -49,8 +41,8 @@ export const deckService = {
 	async update(deckId: string, input: DeckInput): Promise<void> {
 		const parsed = deckSchema.parse(input)
 
-		const ref = doc(db, COL, deckId)
-		await updateDoc(ref, {
+		const ref = firestore().doc(`${COL}/${deckId}`)
+		await ref.update({
 			...parsed,
 			updatedAt: Timestamp.now(),
 		})
@@ -59,22 +51,22 @@ export const deckService = {
 	async put(deckId: string, patch: Partial<DeckInput>): Promise<void> {
 		const parsed = deckSchema.partial().parse(patch)
 
-		const ref = doc(db, COL, deckId)
-		await updateDoc(ref, {
+		const ref = firestore().doc(`${COL}/${deckId}`)
+		await ref.update({
 			...parsed,
 			updatedAt: Timestamp.now(),
 		})
 	},
 
 	async remove(deckId: string) {
-		const ref = doc(db, COL, deckId)
-		await deleteDoc(ref)
+		const ref = firestore().doc(`${COL}/${deckId}`)
+		await ref.delete()
 	},
 
 	async findMany() {
 		const id = getIdOrThrow()
 		const q = query(
-			collection(db, 'decks'),
+			firestore().collection('decks'),
 			where('ownerId', '==', id),
 			orderBy('createdAt', 'desc'),
 		)
@@ -100,7 +92,7 @@ export const deckService = {
 		// batch query cards by deckId (Firestore "in" max 10)
 		for (const ids of chunk(deckIds, 10)) {
 			const q = query(
-				collection(db, 'cards'),
+				firestore().collection('cards'),
 				where('ownerId', '==', id),
 				where('deckId', 'in', ids),
 			)

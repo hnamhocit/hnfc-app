@@ -1,19 +1,12 @@
 import { createId } from '@paralleldrive/cuid2'
-import {
-	collection,
-	db,
-	deleteDoc,
-	doc,
-	getDoc,
+import firestore, {
 	getDocs,
 	orderBy,
 	query,
-	setDoc,
 	Timestamp,
-	updateDoc,
 	where,
-	writeBatch,
-} from 'config'
+} from '@react-native-firebase/firestore'
+
 import { ICard } from 'interfaces'
 import { CardValues } from 'schemas'
 import { createInitialFsrsState, getIdOrThrow } from 'utils'
@@ -24,10 +17,10 @@ export const cardService = {
 	async createMany(cards: ICard[]) {
 		if (!cards.length) return
 
-		const batch = writeBatch(db)
+		const batch = firestore().batch()
 
 		for (const card of cards) {
-			const ref = doc(db, COL, card.id)
+			const ref = firestore().doc(`${COL}/${card.id}`)
 			batch.set(ref, card)
 		}
 
@@ -38,7 +31,7 @@ export const cardService = {
 		const uid = getIdOrThrow()
 
 		const q = query(
-			collection(db, 'cards'),
+			firestore().collection('cards'),
 			where('ownerId', '==', uid),
 			where('deckId', '==', deckId),
 			orderBy('createdAt', 'desc'),
@@ -50,8 +43,8 @@ export const cardService = {
 
 	async getById(id: string): Promise<ICard> {
 		const uid = getIdOrThrow()
-		const ref = doc(db, COL, id)
-		const snap = await getDoc(ref)
+		const ref = firestore().doc(`${COL}/${id}`)
+		const snap = await ref.get()
 
 		if (!snap.exists()) {
 			throw new Error('Card not found')
@@ -81,13 +74,13 @@ export const cardService = {
 			updatedAt: now,
 		}
 
-		const ref = doc(db, COL, data.id)
-		await setDoc(ref, data)
+		const ref = firestore().doc(`${COL}/${data.id}`)
+		await ref.set(data)
 	},
 
 	async update(cardId: string, input: CardValues): Promise<void> {
-		const ref = doc(db, COL, cardId)
-		await updateDoc(ref, {
+		const ref = firestore().doc(`${COL}/${cardId}`)
+		await ref.update({
 			deckId: input.deckId,
 			front: input.front,
 			back: input.back,
@@ -96,8 +89,8 @@ export const cardService = {
 	},
 
 	async remove(cardId: string): Promise<void> {
-		const ref = doc(db, COL, cardId)
-		await deleteDoc(ref)
+		const ref = firestore().doc(`${COL}/${cardId}`)
+		await ref.delete()
 	},
 
 	async listDue(): Promise<ICard[]> {
@@ -105,7 +98,7 @@ export const cardService = {
 		const now = Timestamp.now()
 
 		const q = query(
-			collection(db, 'cards'),
+			firestore().collection('cards'),
 			where('ownerId', '==', uid),
 			where('srs.dueAt', '<=', now),
 			orderBy('srs.dueAt', 'asc'),
